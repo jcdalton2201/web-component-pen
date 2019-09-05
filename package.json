@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/jcdalton2201/web-component-web/issues"
   },
-  "homepage": "https://github.com/jcdalton2201/web-component-web#readme"
+  "homepage": "https://github.com/jcdalton2201/web-component-web#readme",
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "eslint": "^6.3.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "puppeteer": "^1.19.0",
+    "rollup": "^1.20.3",
+    "standard-version": "^7.0.0"
+  }
 }
