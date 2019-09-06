@@ -4,7 +4,15 @@
   "description": "Web Components for basic atomic elements",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "cc": "node scripts/createComponent.js",
+    "lint": "eslint src --fix",
+    "postcc": "npm run lint",
+    "prebuild": "node scripts/buildfile.js && npm run lint",
+    "prework": "npm run build",
+    "test": "jasmine spec/**/*.js",
+    "watchFiles": "watch 'rollup -c' src/",
+    "work": "browser-sync start -c ./bs-config.js & npm run watchFiles"
   },
   "repository": {
     "type": "git",
@@ -17,12 +25,29 @@
   },
   "homepage": "https://github.com/jcdalton2201/web-component-web#readme",
   "devDependencies": {
+    "browser-sync": "^2.26.7",
     "chalk": "^2.4.2",
     "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-jasmine": "^2.10.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "globby": "^10.0.1",
+    "jasmine": "^3.4.0",
+    "jasmine-core": "^3.4.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
     "puppeteer": "^1.19.0",
     "rollup": "^1.20.3",
-    "standard-version": "^7.0.0"
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "^2.0.3",
+    "standard-version": "^7.0.0",
+    "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "lit-html": "^1.1.2"
   }
 }

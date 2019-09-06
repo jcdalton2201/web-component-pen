@@ -1,0 +1,41 @@
+{
+    "plugins": ["prettier","jasmine"],
+    "parser": "",
+    "env": {
+        "es6": true,
+        "jasmine":true,
+        "browser":true,
+        "node":true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2017
+    },
+    "globals": {
+      "tempHtml": true
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "indent": [
+            2,
+            2
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-console":[
+          0
+        ]
+    }
+  }
+  
