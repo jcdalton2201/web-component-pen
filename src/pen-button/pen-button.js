@@ -36,6 +36,7 @@ export class PenButton extends PenBase {
   connected() {
     const { button } = this.refs;
     this.form = findParentForm(this);
+    console.log(this.form.dispatchEvent);
     this.type === this.type || 'submit';
     if (this.form) {
       button.setAttribute('type', 'submit');
@@ -61,6 +62,7 @@ export class PenButton extends PenBase {
    */
   submitForm() {
     if (!this.disabled) {
+      console.log('he hey ehy');
       const submitEvent = new Event('submit');
       this.form.dispatchEvent(submitEvent);
       this.form._inkSubmit = true;
