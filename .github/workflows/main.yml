@@ -25,10 +25,7 @@ jobs:
     - name: git commit        
       run: |
         git config user.name ${{secrets.user_name}}
-        git config user.password ${{secrets.user_password}}
         git add .
-        git commit -m 'build of docs'
-        git push origin master
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
