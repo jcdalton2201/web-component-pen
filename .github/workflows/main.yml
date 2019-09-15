@@ -24,7 +24,7 @@ jobs:
         npm run build-storybook
     - name: git commit        
       run: |
-        git config user.name ${{secrets.user_name}}
+        git config --global user.name ${{secrets.user_name}}
         git add .
         git commit -m 'build docs with $GITHUB_SHA'
       env:
