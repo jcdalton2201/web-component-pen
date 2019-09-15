@@ -22,5 +22,12 @@ jobs:
         npm install
         npm run build --if-present
         npm run build-storybook
+    - name: git commit
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git add .
+        git commit -m 'build of docs'
+        git push 
       env:
         CI: true
