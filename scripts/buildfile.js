@@ -4,7 +4,7 @@ const fs = require('fs');
 
 class BuildFiles {
   constructor() {
-    const ignore = ['src/build.js'];
+    const ignore = ['src/build.js','src/**/*.stories.js'];
     const files = globby.sync('src/**/*.js', { ignore });
     console.log(files);
     const file = 'src/build.js';

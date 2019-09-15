@@ -10,7 +10,7 @@ const postCSS = postCSSPlugin({
     discardComments: true,
   },
 });
-const ignore = ['src/build.js'];
+const ignore = ['src/build.js', 'src/**/*stories.js'];
 const files = globby.sync('src/**/*.js', { ignore });
 console.log(files);
 const external = files.map(file => path.resolve(__dirname, file));
