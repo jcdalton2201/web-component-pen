@@ -6,16 +6,7 @@ describe('Visual regression Tests for pen-button', () => {
   let page = null;
   //   let context = null;
   //   let target = null;
-  beforeAll(async () => {
-    browser = differencify.init({ chain: false, headless: false });
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    await browser.launch();
-    page = await browser.newPage();
-    await page.setBypassCSP(true);
-    await page.setViewport({ width: 1600, height: 1200 });
-    // await page.goto('http://localhost:8080');
-    await page.addScriptTag({ path: 'dist/pen-core-ui.js' });
-  });
+  beforeAll(async () => {});
   afterEach(async () => {
     const bodyhandle = await page.$('body');
     await page.evaluate(element => {
@@ -28,6 +19,18 @@ describe('Visual regression Tests for pen-button', () => {
   });
 
   it('Test default color', async () => {
+    browser = differencify.init({
+      testName: 'Test default color',
+      chain: false,
+      headless: true,
+    });
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    await browser.launch();
+    page = await browser.newPage();
+    await page.setBypassCSP(true);
+    await page.setViewport({ width: 1600, height: 1200 });
+    // await page.goto('http://localhost:8080');
+    await page.addScriptTag({ path: 'dist/pen-core-ui.js' });
     const bodyhandle = await page.$('body');
     await page.evaluate(element => {
       element.innerHTML = `
@@ -43,7 +46,19 @@ describe('Visual regression Tests for pen-button', () => {
     const result = await browser.toMatchSnapshot(image);
     expect(result).toBeTruthy();
   });
-  it('Test a diffrent color', async () => {
+  it('Test a green color', async () => {
+    browser = differencify.init({
+      testName: 'Test green color',
+      chain: false,
+      headless: true,
+    });
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    await browser.launch();
+    page = await browser.newPage();
+    await page.setBypassCSP(true);
+    await page.setViewport({ width: 1600, height: 1200 });
+    // await page.goto('http://localhost:8080');
+    await page.addScriptTag({ path: 'dist/pen-core-ui.js' });
     const bodyhandle = await page.$('body');
     await page.evaluate(element => {
       element.innerHTML = `
@@ -60,6 +75,18 @@ describe('Visual regression Tests for pen-button', () => {
     expect(result).toBeTruthy();
   });
   it('Test a hover color', async () => {
+    browser = differencify.init({
+      testName: 'Test a hover color',
+      chain: false,
+      headless: true,
+    });
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    await browser.launch();
+    page = await browser.newPage();
+    await page.setBypassCSP(true);
+    await page.setViewport({ width: 1600, height: 1200 });
+    // await page.goto('http://localhost:8080');
+    await page.addScriptTag({ path: 'dist/pen-core-ui.js' });
     const bodyhandle = await page.$('body');
     await page.evaluate(element => {
       element.innerHTML = `
@@ -80,7 +107,7 @@ describe('Visual regression Tests for pen-button', () => {
     });
     await button.hover();
     await page.waitFor(2000);
-    const image = await page.screenshot();
+    const image = await page.screenshot({ path: 'hover.png' });
     const result = await browser.toMatchSnapshot(image);
     expect(result).toBeTruthy();
   });

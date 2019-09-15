@@ -6,7 +6,7 @@ describe('Unit and Functional Tests for pen-button', () => {
   //   let context = null;
   //   let target = null;
   beforeAll(async () => {
-    browser = await puppeteer.launch({ headless: false });
+    browser = await puppeteer.launch({ headless: true });
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     page = await browser.newPage();
     await page.setBypassCSP(true);

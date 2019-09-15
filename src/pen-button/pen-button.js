@@ -65,7 +65,7 @@ export class PenButton extends PenBase {
       console.log('he hey ehy');
       const submitEvent = new Event('submit');
       this.form.dispatchEvent(submitEvent);
-      this.form._inkSubmit = true;
+      this.form._penSubmit = true;
     }
   }
 
@@ -125,12 +125,12 @@ export class PenButton extends PenBase {
   __onFormSubmit(event) {
     if (
       !event.isTrusted &&
-      event.target._inkSubmit &&
+      event.target._penSubmit &&
       !event.defaultPrevented
     ) {
       event.target.submit();
     }
-    delete event.target._inkSubmit;
+    delete event.target._penSubmit;
   }
 }
 defineElement('pen-button', PenButton);
