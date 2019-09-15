@@ -31,7 +31,7 @@ jobs:
         git config --global user.name "${{secrets.user_name}}"
         git add .
         git commit -m 'build docs with ${GITHUB_SHA}'
-        git push master 
+        git push master HEAD:master
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
