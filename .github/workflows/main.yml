@@ -23,11 +23,11 @@ jobs:
         npm run build --if-present
         npm run build-storybook
     - name: git commit
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"       
+             
       run: |
+
         git add .
-        git commit -m 'build docs with $GITHUB_SHA'
+        git commit -m 'build docs with ${GITHUB_SHA}' 
       env:
         CI: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
