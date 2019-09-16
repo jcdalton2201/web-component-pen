@@ -27,7 +27,6 @@ jobs:
     - name: git commit
              
       run: |
-        git config user.email "jcdalton@hotmail.com"
         git add .
         git commit -m 'build docs with ${GITHUB_SHA}'
         git push origin HEAD:master
