@@ -29,11 +29,10 @@ jobs:
       run: |
         git config user.email "jcdalton@hotmail.com"
         git config user.name ${{secrets.user_name}}
-        git config user.password ${{secrets.GIT_JCD_TOKEN}}
         git add .
         git commit -m 'build docs with ${GITHUB_SHA}'
         git push origin HEAD:master
       env:
         CI: true
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GIT_JCD_TOKEN }}
 
