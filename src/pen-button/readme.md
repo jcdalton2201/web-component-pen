@@ -2,9 +2,9 @@
 
 ## Details
 
-`PenButton` is a web component implementation of the [button component from the ONE Design System](https://ods.capitalone.com/user-interface/ui-elements/buttons/). Ultimately the component renders a button and sets styles relative to what the system defines.
+`PenButton` is a web component implementation of the  Ultimately the component renders a button and sets styles relative to what the system defines.
 
-There are several variants of the button, called types. Each has it's own specific meaning and use cases; more detail can be found at the lpen above. Here's what the system says about the button component.
+There are several variants of the button, called types. Each has it's own specific meaning and use cases; more detail can be found at the pen above. Here's what the system says about the button component.
 
 >Buttons communicate the action that will take place when triggered. They’re hierarchically more important than lpen text or another pattern that points to supplementary content.
 

@@ -29,6 +29,7 @@
   "homepage": "https://github.com/jcdalton2201/web-component-web#readme",
   "devDependencies": {
     "@babel/core": "^7.6.0",
+    "@storybook/addon-knobs": "^5.2.0",
     "@storybook/addon-notes": "^5.2.0",
     "@storybook/html": "^5.2.0",
     "babel-loader": "^8.0.6",
