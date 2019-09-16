@@ -1,6 +1,9 @@
 name: Node CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -31,7 +34,7 @@ jobs:
         git config --global user.email "jcdalton@hotmail.com"
         git config --global user.name "jcdalton2201"
         git add .
-        git commit -m 'build docs with ${GITHUB_SHA}'
+        git commit -m 'build docs with ${{github.sha}}'
         git push upstream HEAD:master
       env:
         CI: true
