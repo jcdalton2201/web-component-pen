@@ -16,7 +16,6 @@ There are several variants of the button, called types. Each has it's own specif
 
 | Name        | Boolean      | Description                                       |
 |-------------|--------------|---------------------------------------------------|
-| `variant`   | false        | The type attribute defines what class of button is rendered. It is reflected by the `type` property on the element. The possible values are `'action'`, `'progressive'`, `'regressive'`, `'destructive'`, `'ghost'`, `'text'`, `'right` and `'left'`. |
 | `type`      | false        | Analagous to the `HTMLButtonElement`'s type attribute. Reflected as a property. |
 | `loading`   | true         | The loading attribute will toggle the element's loading state. This is reflected as a property. |
 | `disabled`  | true         | Sets the internal button's disabled state. Is reflected by the `disabled` property. |

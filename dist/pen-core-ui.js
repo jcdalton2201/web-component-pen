@@ -1724,4 +1724,560 @@ class PenCard extends PenBase {
   }
 }
 defineElement('pen-card', PenCard);
+
+var css$2 = ".error{color:red;font-size:.75rem;height:1rem;padding:var(--padding-small,4px)}";
+
+class PenErrors extends PenBase {
+  static get styles() {
+    return [css$2];
+  }
+  static get boundAttributes() {
+    return ['id'];
+  }
+  static get booleanAttributes() {
+    return [];
+  }
+
+  constructor() {
+    super();
+    this._invalidClass = 'input-error';
+    // eslint-disable-next-line no-unused-vars
+    this.baseTemplate = style => html`
+    ${unsafeHTML(style)}
+    <div class='error' data-ref='errors'></div<>`;
+    this.validityMessages = new Map([
+      ['customError', this._generateMessage(100, 'This field is invalid')],
+      ['badInput', this._generateMessage(4, 'This field is invalid')],
+      [
+        'patternMismatch',
+        this._generateMessage(
+          9,
+          'This field does not follow the proper pattern'
+        ),
+      ],
+      [
+        'rangeOverflow',
+        this._generateMessage(
+          8,
+          'The value does not fit in the necessary range'
+        ),
+      ],
+      [
+        'stepMismatch',
+        this._generateMessage(7, 'The value is not a valid step'),
+      ],
+      ['tooLong', this._generateMessage(6, 'The value is too long')],
+      ['tooShort', this._generateMessage(6, 'The value is too short')],
+      [
+        'typeMismatch',
+        this._generateMessage(5, 'The entered value is not the right format'),
+      ],
+      ['valueMissing', this._generateMessage(10, 'This field is required')],
+    ]);
+    this._inputs = [];
+    this.validators = this.validators || [];
+    this.bindMethods([
+      '_onIdChange',
+      'handleChange',
+      'handleReset',
+      '_onDescribesInput',
+      '_inputInvalid',
+      '_inputValid',
+    ]);
+    // this.updatedCallbacks.set('id', this._onIdChange);
+  }
+  connected() {
+    /** Initialize the element */
+    this._onIdChange(this.id);
+    this._addEventListeners();
+    /** Append helper text */
+    this.validityMessages.has('valid') &&
+      this.appendErrorMessage(this.validityMessages.get('valid'));
+  }
+  disconnected() {
+    if (this.describes) {
+      this.describes.removeEventListener('change', this.handleChange);
+      this.describes.removeEventListener('input', this._onDescribesInput);
+      this.describes.removeEventListener('blur', this.handleChange);
+    } else if (this._inputs.length) {
+      this._inputs.forEach(input => {
+        input.removeEventListener('change', this.handleChange);
+        input.removeEventListener('input', this._onDescribesInput);
+        input.removeEventListener('blur', this.handleChange);
+      });
+    }
+    this.form && this.form.removeEventListener('submit', this.handleChange);
+    this._inputs.length = 0;
+  }
+  render() {
+    render(this.baseTemplate(this.htmlLitStyle()), this.root);
+    this.buildRefs();
+  }
+  appendErrorMessage(message) {
+    const { errors } = this.refs;
+    if (errors) {
+      errors.innerHTML = '';
+      if (message && message.message) {
+        const helperEl = document.createElement('span');
+        helperEl.classList.add(message.type);
+        helperEl.innerHTML = message.message;
+        errors.appendChild(helperEl);
+      }
+    }
+  }
+  connectInput(input) {
+    this._addEventListeners(input);
+    this._inputs.push(input);
+    if (input.type === 'radio') {
+      this._invalidClass = 'radio-error';
+    }
+  }
+  handleChange(event = {}) {
+    /** Prevent form submission if invalid */
+    const describesInvalid =
+      this.describes &&
+      this.describes.validity &&
+      this.describes.validity.valid === false;
+    const inputsInvalid = describesInvalid;
+    const isInvalid = describesInvalid || inputsInvalid;
+    if (this.form === event.target && event.type === 'submit' && isInvalid) {
+      event.preventDefault();
+    }
+    let validity = {};
+    if (this.describes) {
+      validity = this.describes.validity;
+    } else if (this._inputs[0]) {
+      validity = this._inputs[0].validity;
+    }
+    if (!validity) {
+      validity = this._inputs[0].validity;
+    }
+    const validityKeys = [];
+    this.validityMessages.forEach((value, key) => validityKeys.push(key));
+    const errors = validityKeys
+      .filter(errorKey => validity[errorKey])
+      .map(errorKey => this.validityMessages.get(errorKey))
+      .reduce((current, next) => {
+        return current.priority > next.priority ? current : next;
+      }, {});
+
+    this.appendErrorMessage(errors);
+
+    if (this.describes) {
+      if (validity.valid === false) {
+        this._inputInvalid(this.describes);
+      } else {
+        this._inputValid(this.describes);
+      }
+    } else if (this._inputs.length) {
+      if (validity.valid === false) {
+        this._inputs.forEach(this._inputInvalid);
+      } else {
+        this._inputs.forEach(this._inputValid);
+      }
+    }
+  }
+  handleReset() {
+    const { errors } = this.refs;
+    const { describes } = this;
+    if (errors) {
+      errors.innerHTML = '';
+      describes.classList.remove(this._invalidClass);
+      if (this.validityMessages.get('valid')) {
+        this.appendErrorMessage(this.validityMessages.get('valid'));
+      }
+    }
+  }
+  setCustomError(message) {
+    const customError = this.validityMessages.get('customError');
+    customError ? (customError.message = message) : null;
+    this.handleChange();
+  }
+  setErrorMessage(key, message) {
+    this.validityMessages.get(key).message = message;
+    return this.validityMessages.get(key).message;
+  }
+  setErrorText(message) {
+    this.validityMessages.set(
+      'valid',
+      this._generateMessage(10, message, 'helper')
+    );
+    const helper = this.validityMessages.get('valid');
+    this.appendErrorMessage(helper);
+  }
+  _addEventListeners(input) {
+    input = input || this.describes;
+    if (input) {
+      input.addEventListener('change', this.handleChange);
+      input.addEventListener('blur', this.handleChange);
+      input.addEventListener('input', this._onDescribesInput);
+      if (this.form) {
+        this.form.addEventListener('submit', this.handleChange, true);
+        this.form.addEventListener('reset', this.handleReset, true);
+      }
+    }
+  }
+  get form() {
+    this._form = this._form || findParentForm(this);
+    return this._form;
+  }
+  _inputInvalid(input) {
+    input.classList.add(this._invalidClass);
+    input.setAttribute('aria-invalid', true);
+  }
+  _inputValid(input) {
+    input.classList.remove(this._invalidClass);
+    input.setAttribute('aria-invalid', false);
+  }
+  _onIdChange(value) {
+    const selector = `[aria-describedby~="${value}"]`;
+
+    if (this.parentNode && this.parentNode.host) {
+      this.describes = this.parentNode.host.shadowRoot.querySelector(selector);
+    } else if (this.parentNode) {
+      this.describes = this.parentNode.querySelector(selector);
+    }
+    if (this.describes) {
+      this._invalidClass =
+        {
+          checkbox: 'checkbox-error',
+          textarea: 'textarea-error',
+        }[this.describes.type] || 'input-error';
+
+      if (this.describes.tagName === 'SELECT') {
+        this._invalidClass = 'select-error';
+      }
+
+      if (this.describes.dataset.helperText) {
+        this.setErrorText(this.describes.dataset.helperText);
+      } else {
+        setTimeout(() => {
+          this.setErrorText(this.innerHTML);
+        });
+      }
+    }
+  }
+  _generateMessage(priority, message, type = 'error') {
+    return { priority, message, type };
+  }
+  _onDescribesInput() {
+    if (this.shadowRoot.querySelector('.error')) {
+      this.appendErrorMessage(this.validityMessages.get('valid'));
+      if (this.describes) {
+        this.describes.classList.remove(this._invalidClass);
+      } else {
+        this._inputs.forEach(input =>
+          input.classList.remove(this._invalidClass)
+        );
+      }
+    }
+  }
+}
+defineElement('pen-errors', PenErrors);
+
+class PenInputBase extends PenBase {
+  static get boundAttributes() {
+    return [];
+  }
+  static get booleanAttributes() {
+    return [];
+  }
+
+  constructor(inputRef = 'input', errorRef = 'errors') {
+    super();
+    this._inputRef = inputRef;
+    this._errorRef = errorRef;
+    this.bindMethods(['setErrorMessage', 'setCustomValidity', '__onFormReset']);
+    const { form } = this;
+    this.on('keydown', event => {
+      if (form && event.code === 'Enter') {
+        form.dispatchEvent(new CustomEvent('submit'));
+      }
+    });
+
+    if (form) {
+      form.addEventListener('reset', this.__onFormReset);
+    }
+  }
+  /**
+   * proxy the checkValidity from input.
+   */
+  get checkValidity() {
+    const input = this.ref(this._inputRef);
+    return input.checkValidity.bind(input);
+  }
+  /**
+   * get the parent form.
+   */
+  get form() {
+    this._form = this._form || findParentForm(this);
+    return this._form;
+  }
+  /**
+   * proxy the validity from the input.
+   */
+  get validity() {
+    const input = this.ref(this._inputRef);
+    return input ? input.validity : {};
+  }
+  /**
+   * Proxy input validationMessage
+   */
+  get validationMessage() {
+    const input = this.ref(this._inputRef);
+    return input ? input.validationMessage : null;
+  }
+
+  /**
+   * Proxy input willValidate
+   *
+   */
+  get willValidate() {
+    const input = this.ref(this._inputRef);
+    return input ? input.willValidate : null;
+  }
+
+  /** Proxy input blur */
+  blur() {
+    const input = this.ref(this._inputRef);
+    input ? input.blur() : null;
+  }
+
+  /** Proxy input click */
+  click() {
+    const input = this.ref(this._inputRef);
+    input ? input.click() : null;
+  }
+
+  /** Proxy input focus */
+  focus() {
+    const input = this.ref(this._inputRef);
+    input ? input.focus() : null;
+  }
+  /**
+   * Change the default error message
+   * @param {string} key - The key of the error message
+   * @param {string} message - The new error message
+   * @return {string} - The new error message
+   */
+  setErrorMessage(key, message) {
+    const error = this.ref(this._errorRef);
+    return error
+      ? this.ref(this._errorRef).setErrorMessage(key, message)
+      : null;
+  }
+  /**
+   * Set custom error message
+   * @param {String} message
+   */
+  setCustomValidity(message = '') {
+    const input = this.ref(this._inputRef);
+    const error = this.ref(this._errorRef);
+    if (!message) {
+      message = '';
+    }
+    input ? input.setCustomValidity(message) : null;
+    error ? error.setCustomError(message) : null;
+  }
+  /**
+   * Set the element's helper text
+   * @param {string} value - Helper text
+   */
+  setError(value) {
+    if (this.ref(this._errorRef)) {
+      this.ref(this._errorRef).setHelperText(value);
+    }
+  }
+
+  /**
+   * Reset the value when the form is reset
+   */
+  __onFormReset() {
+    this.value = '';
+  }
+}
+defineElement('pen-input-base', PenInputBase);
+
+var css$3 = "#container{display:flex;flex-direction:column}#container label{text-transform:capitalize;color:var(--dark-gray,#23282b);font-size:.75rem;opacity:.9;letter-spacing:.5px;display:block;margin-bottom:var(--padding-small,4px);position:relative;vertical-align:middle}#container input{border-radius:var(--radius-default,4px);background-image:none;box-shadow:none;font-size:1rem;height:var(--height-default,1rem);line-height:1.5;margin:0;padding:var(--padding-default,8px);border:2px solid var(--gray-default,#cfcccf);width:fit-content}#container input.input-error{border:2px solid var(--red-default,red)}#container input:disabled,#container input:read-only{cursor:not-allowed}";
+
+/* eslint-disable no-useless-escape */
+class PenInput extends PenInputBase {
+  static get styles() {
+    return [css$3];
+  }
+  static get boundAttributes() {
+    return [
+      'disabled',
+      'required',
+      'minlength',
+      'maxlength',
+      'readonly',
+      'autocomplete',
+      'autofocus',
+      'tooltip',
+      'pattern',
+      'min',
+      'max',
+      'value',
+      'placeholder',
+      'size',
+      'compact',
+      'helper',
+      'error-message',
+      'counter',
+      'step',
+      'id',
+      'title',
+    ];
+  }
+  static get booleanAttributes() {
+    return [
+      'disabled',
+      'required',
+      'readonly',
+      'autofocus',
+      'compact',
+      'counter',
+    ];
+  }
+
+  constructor(inputType = 'text') {
+    super();
+    this._id =
+      this.id || btoa(Math.floor(Math.random() * 1000000)).replace(/\=/gi, '');
+    this._inputType = inputType;
+    // eslint-disable-next-line no-unused-vars
+    this.baseTemplate = style => html`
+      ${unsafeHTML(style)}
+      <div id="container">
+        <label data-ref="label" for="${this._id}"><slot></slot></label>
+        <input data-ref="input" id="${this._id}" />
+        <pen-errors data-ref="errors"></pen-errors>
+      </div>
+    `;
+    this.bindMethods(['_onInputInput', '_linkInput', '_setCharacterCount']);
+    this._inputAttributes = [
+      'disabled',
+      'required',
+      'minlength',
+      'maxlength',
+      'readonly',
+      'autocomplete',
+      'autofocus',
+      'pattern',
+      'min',
+      'max',
+      'placeholder',
+      'size',
+      'step',
+    ];
+    this._inputAttributes.forEach(attribute => {
+      this.updatedCallbacksMap.set(attribute, this._linkInput);
+    });
+    this.updatedCallbacksMap.set('value', this._setValue);
+    this.updatedCallbacksMap.set('tooltip', this.setHelper);
+    this.updatedCallbacksMap.set('compact', this._toggleInputClass);
+    this.updatedCallbacksMap.set('helper', this.setHelper);
+    this.updatedCallbacksMap.set('error-message', this.setCustomValidity);
+    this.updatedCallbacksMap.set('counter', this._setCharacterCount);
+  }
+  connected() {
+    const { input } = this.refs;
+    input.addEventListener('input', this._onInputInput);
+    // Initialize input
+    this._inputAttributes.forEach(attribute => {
+      this[attribute] ? this._linkInput(this[attribute], attribute) : null;
+    });
+  }
+
+  disconnected() {
+    this.refs.input.removeEventListener('input', this._onInputInput);
+  }
+  render() {
+    render(this.baseTemplate(this.htmlLitStyle()), this.root);
+    this.buildRefs();
+    const { errors, input } = this.refs;
+    errors.connectInput(input);
+  }
+  _setValue(_value) {
+    const { input, counter } = this.refs;
+    if (input && input.value !== _value) {
+      input.value = _value;
+    }
+    if (this.counter && counter) {
+      counter.count = (_value && _value.length) || '0';
+    }
+    this.emitEvent('pen-change', _value);
+  }
+  /**
+   * Link input and `this` properties and values
+   * @param {any} value - The new value for the property
+   * @param {sring} prop - The property name to link between this and input
+   */
+  _linkInput(value, prop) {
+    const { input, label } = this.refs;
+
+    if (label) {
+      switch (prop) {
+        case 'disabled':
+          if (value) {
+            label.classList.add('disabled');
+          } else {
+            label.classList.remove('disabled');
+          }
+          break;
+        case 'id':
+          this._id = value;
+          label.setAttriubte('for', value);
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (input) {
+      if (!value) {
+        input.removeAttribute(prop);
+      } else if (prop === 'minlength') {
+        input.minLength = value;
+      } else if (prop === 'maxlength') {
+        input.maxLength = value;
+      } else if (prop === 'readonly') {
+        input.readOnly = value;
+      } else {
+        input[prop] = value;
+      }
+    }
+  }
+  /**
+   *
+   * @param {Boolean} isVisible
+   */
+  _setCharacterCount(isVisible) {
+    const { counter } = this.refs;
+    if (counter && this.maxlength) {
+      counter.hidden = !isVisible;
+      Promise.resolve().then(() => (counter.max = this.maxlength));
+    }
+  }
+  /**
+   *
+   * @param {Event} event
+   */
+  _onInputInput(event) {
+    this.value = event.target.value;
+  }
+  /**
+   * Toggle a class on input
+   * @param {boolean} value - set the class
+   * @param {string} prop - class to set
+   */
+  _toggleInputClass(value, prop) {
+    const { input } = this.refs;
+    if (input) {
+      input.classList.toggle(prop, value);
+    }
+  }
+}
+defineElement('pen-input', PenInput);
 //# sourceMappingURL=pen-core-ui.js.map
