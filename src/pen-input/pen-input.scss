@@ -1,0 +1,36 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    label {
+       text-transform: capitalize;
+       color: var(--dark-gray,#23282b);
+       font-size: .75rem;
+       opacity: .9;
+       letter-spacing: .5px;
+       display: block;
+       margin-bottom: var(--padding-small,4px);
+       position: relative;
+       vertical-align: middle; 
+    }
+    input {
+        border-radius: var(--radius-default,4px);
+        background-image: none;
+        box-shadow: none;
+        font-size: 1rem;
+        height: var(--height-default, 1rem);
+        line-height: 1.5;
+        margin: 0;
+        padding: var(--padding-default,8px);
+        border: 2px solid var(--gray-default,#cfcccf);
+        &.input-error {            
+            border: 2px solid var(--red-default,red);
+        }
+        &:disabled {
+            cursor: not-allowed;
+        }
+        &:read-only {
+            cursor: not-allowed;
+        }
+        width: fit-content;
+    }
+}
