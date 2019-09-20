@@ -1,6 +1,5 @@
 // const puppeteer = require('puppeteer');
-const Differencify = require('differencify');
-const differencify = new Differencify({});
+
 describe('Visual regression Tests for pen-button', () => {
   let browser = null;
   let page = null;
@@ -19,6 +18,8 @@ describe('Visual regression Tests for pen-button', () => {
   });
 
   it('Test default color', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test default color',
       chain: false,
@@ -47,6 +48,8 @@ describe('Visual regression Tests for pen-button', () => {
     expect(result).toBeTruthy();
   });
   it('Test a green color', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test green color',
       chain: false,
@@ -75,6 +78,8 @@ describe('Visual regression Tests for pen-button', () => {
     expect(result).toBeTruthy();
   });
   it('Test a hover color', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test a hover color',
       chain: false,

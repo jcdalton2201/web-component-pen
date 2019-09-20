@@ -2,8 +2,7 @@ const difUtil = require('../diff-util.js');
 const { AxePuppeteer } = require('axe-puppeteer');
 const AxeUtil = require('../axe-util.js');
 describe('Unit and Functional Tests for pen-input', () => {
-  const Differencify = require('differencify');
-  const differencify = new Differencify({});
+  
   let browser = null;
   let page = null;
   beforeAll(async () => {});
@@ -18,6 +17,8 @@ describe('Unit and Functional Tests for pen-input', () => {
   afterAll(async () => {});
 
   it('Test we can add an input field', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can add an input field'
@@ -38,6 +39,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can type in input field', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can type in input field'
@@ -62,6 +65,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we show error on required out', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we show error on required outd'
@@ -88,6 +93,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set the max length', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can set the max length'
@@ -112,6 +119,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set the min length', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can set the min length'
@@ -143,6 +152,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set the pattern', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can set the pattern');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -167,6 +178,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set the readonly', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can set the readonly');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -188,6 +201,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set the size', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can set the size');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -205,6 +220,8 @@ describe('Unit and Functional Tests for pen-input', () => {
     expect(result).toBeTruthy();
   });
   it('Test accessibility of the element', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test accessibility of the element'
