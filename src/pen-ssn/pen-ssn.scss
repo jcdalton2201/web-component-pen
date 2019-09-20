@@ -1,0 +1,7 @@
+#container {
+    .label-div {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--small-padding, 4px);
+    }
+}

@@ -8,12 +8,15 @@
 </head>
 <body>
   <form action="#">
-    <pen-input id='first' size='3'>First Name</pen-input>  
-    <pen-input required id='last' readonly>Last Name</pen-input>  
+    <pen-input id='first' size='3' required>First Name</pen-input>  
+    <pen-ssn id='ssn' required >SSN</pen-input>  
   </form>
 </body>
 <script src="pen-core-ui.js"></script>
 <script>
-  
+  const x = document.querySelector('pen-ssn');
+  console.log(x);
+  x.value = '5634564';
+  x.setAttribute('value','666666666');
 </script>
 </html>

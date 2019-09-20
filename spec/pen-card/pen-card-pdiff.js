@@ -1,5 +1,3 @@
-const Differencify = require('differencify');
-const differencify = new Differencify({});
 describe('Visual regression Tests for pen-card', () => {
   let browser = null;
   let page = null;
@@ -16,6 +14,8 @@ describe('Visual regression Tests for pen-card', () => {
   });
 
   it('Test default elevations', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test default elevation',
       chain: false,
@@ -43,6 +43,8 @@ describe('Visual regression Tests for pen-card', () => {
     expect(result).toBeTruthy();
   });
   it('Test elevations 1', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test elevation 1',
       chain: false,
@@ -70,6 +72,8 @@ describe('Visual regression Tests for pen-card', () => {
     expect(result).toBeTruthy();
   });
   it('Test elevations 2', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test elevation 2',
       chain: false,
@@ -97,6 +101,8 @@ describe('Visual regression Tests for pen-card', () => {
     expect(result).toBeTruthy();
   });
   it('Test elevations 3', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = differencify.init({
       testName: 'Test elevation 3',
       chain: false,

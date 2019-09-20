@@ -1,5 +1,3 @@
-const Differencify = require('differencify');
-const differencify = new Differencify({});
 const difUtil = require('../diff-util.js');
 describe('Unit and Functional Tests for pen-errors', () => {
   let browser = null;
@@ -16,6 +14,8 @@ describe('Unit and Functional Tests for pen-errors', () => {
   afterAll(async () => {});
 
   it('Test we can append a message', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can append a message');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -34,6 +34,8 @@ describe('Unit and Functional Tests for pen-errors', () => {
     expect(result).toBeTruthy();
   });
   it('Test we can set a message', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can set a message');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -49,6 +51,8 @@ describe('Unit and Functional Tests for pen-errors', () => {
     expect(text).toEqual('we set message');
   });
   it('Test we can handel a change', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(differencify, 'Test we can handel a change');
     page = await difUtil.createPage(browser);
     const bodyhandle = await difUtil.createBodyHandle(page);
@@ -74,6 +78,8 @@ describe('Unit and Functional Tests for pen-errors', () => {
     expect(text).toEqual('This field does not follow the proper pattern');
   });
   it('Test we can change an error message', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can change an error message'
@@ -103,6 +109,8 @@ describe('Unit and Functional Tests for pen-errors', () => {
     expect(text).toEqual('Why do we have dumb errors');
   });
   it('Test we can change an set custom error', async () => {
+    const Differencify = require('differencify');
+    const differencify = new Differencify({});
     browser = difUtil.setTestName(
       differencify,
       'Test we can change an set custom error'

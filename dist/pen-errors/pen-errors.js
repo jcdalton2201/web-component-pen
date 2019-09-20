@@ -113,6 +113,7 @@ class PenErrors extends PenBase {
   }
   handleChange(event = {}) {
     /** Prevent form submission if invalid */
+    console.log(this._inputs);
     const describesInvalid =
       this.describes &&
       this.describes.validity &&
