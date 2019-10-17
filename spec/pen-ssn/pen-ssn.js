@@ -2,7 +2,6 @@ const difUtil = require('../diff-util.js');
 // const { AxePuppeteer } = require('axe-puppeteer');
 // const AxeUtil = require('../axe-util.js');
 describe('Unit and Functional Tests for pen-ssn', () => {
-  
   let browser = null;
   let page = null;
   beforeAll(async () => {});
@@ -56,7 +55,7 @@ describe('Unit and Functional Tests for pen-ssn', () => {
     const value = await page.$eval('pen-ssn', el => {
       return el.value;
     });
-    expect(value).toEqual('123456789');
+    expect(value).toEqual('•••-••-6789');
     await page.waitFor(1000);
     const image = await page.screenshot();
     const result = await browser.toMatchSnapshot(image);
@@ -83,7 +82,7 @@ describe('Unit and Functional Tests for pen-ssn', () => {
     const value = await page.$eval('pen-ssn', el => {
       return el.value;
     });
-    expect(value).toEqual('123456789');
+    expect(value).toEqual('•••-••-6789');
     await page.waitFor(1000);
     const button = await page.evaluateHandle(body => {
       return body.querySelector('pen-ssn').root.querySelector('button');

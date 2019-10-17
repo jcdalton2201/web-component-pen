@@ -108,7 +108,13 @@ export class PenBase extends HTMLElement {
     /** Save html */
     this[renderSymbol] = false;
   }
-
+  /**
+   *
+   * @param {String} item the element you are looking form
+   */
+  ref(item) {
+    return this.refs[item];
+  }
   /**
    * Attaches a click event handler if disabled is present. Ensures disabled components cannot emit click events
    * @return void

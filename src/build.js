@@ -3,6 +3,7 @@ import './pen-card/pen-card.js';
 import './pen-errors/pen-errors.js';
 import './pen-input/pen-input.js';
 import './pen-input-base/pen-input-base.js';
+import './pen-loading/pen-loading.js';
 import './pen-ssn/pen-ssn.js';
 import './utils/coerce-boolean-value.js';
 import './utils/define-element.js';

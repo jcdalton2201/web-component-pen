@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Pen Test</title>
-</head>
-<body>
-  <form action="#">
-    <pen-input id='first' size='3' required>First Name</pen-input>  
-    <pen-ssn id='ssn' required >SSN</pen-input>  
-  </form>
-</body>
-<script src="pen-core-ui.js"></script>
-<script>
-  const x = document.querySelector('pen-ssn');
-  console.log(x);
-  x.value = '5634564';
-  x.setAttribute('value','666666666');
-</script>
+  </head>
+  <body>
+    <div style="width: 400px;height: 400px;">
+      <h1><button>hello</button></h1>
+      <pen-loading full="true" width="400px"></pen-loading>
+    </div>
+  </body>
+  <script src="pen-core-ui.js"></script>
+  <script></script>
 </html>

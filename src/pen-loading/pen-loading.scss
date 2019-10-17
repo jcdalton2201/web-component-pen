@@ -1,0 +1,39 @@
+svg {
+  width: min-content;
+  height: 100%;
+}
+
+line {
+  stroke-width: 1;
+  stroke: #3c3c3c;
+}
+
+#wave {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #56acf4;
+  transition: 500ms;
+}
+#wave2 {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #f4566b;
+  transition: 500ms;
+}
+.full {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #80808054;
+  z-index: 999;
+}
